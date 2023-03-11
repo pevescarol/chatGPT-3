@@ -1,14 +1,31 @@
-# https://platform.openai.com/docs/guides/chat/introduction
-# Note: you need to be using OpenAI Python v0.27.0 for the code below to work
+# Doc: https://platform.openai.com/docs/guides/chat/introduction
 import openai
+import config
 
-openai.ChatCompletion.create(
-  model="gpt-3.5-turbo",
-  messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Who won the world series in 2020?"},
-        {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
-        {"role": "user", "content": "Where was it played?"}
-    ]
-)
+openai.api_key = config.api_key
 
+
+# contexto del asistente
+messages = [
+        {"role": "system", "content": "Eres un asistente muy útil."}]
+
+while True:
+    content = input("> Escribe acá tu pregunta...")
+
+    if content == "exit":
+        break
+
+    messages.append({"role": "user", "content": content})
+
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=messages
+    )
+
+    # solo quiero imprimir el messsage, osea la respuesta
+    response_content = response.choices[0].message.content
+
+    # le damos contexto al chat para que entienda de que estabamos hablando
+    messages.append({"role": "assistant", "content": response})
+
+    print(response_content)
