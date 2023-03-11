@@ -8,3 +8,4 @@
 
 ***libreria para poder crear programas desde la terminal***
 - pip install typer[all]
+- pip install rich
