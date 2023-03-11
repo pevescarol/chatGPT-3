@@ -1,0 +1,1 @@
+api_key = "aqui va la api key que hayas generado en la cuenta de open ai"
